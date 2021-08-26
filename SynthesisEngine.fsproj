@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="packages\FSharp.Compiler.Tools.10.2.3\build\FSharp.Compiler.Tools.props" Condition="Exists('packages\FSharp.Compiler.Tools.10.2.3\build\FSharp.Compiler.Tools.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <MinimumVisualStudioVersion Condition="'$(MinimumVisualStudioVersion)' == ''">11</MinimumVisualStudioVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
+    <ProjectGuid>{e4a92899-f229-4867-907a-9c56e325945b}</ProjectGuid>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <Tailcalls>true</Tailcalls>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <WarningLevel>3</WarningLevel>
+    <DocumentationFile>bin\Release\SynthesisEngine.XML</DocumentationFile>
+    <PlatformTarget>x64</PlatformTarget>
+    <StartArguments>
+    </StartArguments>
+  </PropertyGroup>
+  <Choose>
+    <When Condition="'$(VisualStudioVersion)' == '11.0'">
+      <PropertyGroup Condition="Exists('$(MSBuildExtensionsPath32)\..\Microsoft SDKs\F#\3.0\Framework\v4.0\Microsoft.FSharp.Targets')">
+        <FSharpTargetsPath>$(MSBuildExtensionsPath32)\..\Microsoft SDKs\F#\3.0\Framework\v4.0\Microsoft.FSharp.Targets</FSharpTargetsPath>
+      </PropertyGroup>
+    </When>
+    <Otherwise>
+      <PropertyGroup Condition="Exists('/usr/share/dotnet/sdk/5.0.400/FSharp/Microsoft.FSharp.Targets')">
+        <FSharpTargetsPath>/usr/share/dotnet/sdk/5.0.400/FSharp/Microsoft.FSharp.Targets</FSharpTargetsPath>
+      </PropertyGroup>
+    </Otherwise>
+  </Choose>
+  <Import Project="$(FSharpTargetsPath)" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+  </PropertyGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('packages\FSharp.Compiler.Tools.10.2.3\build\FSharp.Compiler.Tools.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\FSharp.Compiler.Tools.10.2.3\build\FSharp.Compiler.Tools.props'))" />
+    <Error Condition="!Exists('packages\Microsoft.Z3.x64.4.8.10\build\Microsoft.Z3.x64.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Microsoft.Z3.x64.4.8.10\build\Microsoft.Z3.x64.targets'))" />
+  </Target>
+  <ItemGroup>
+    <Compile Include="Circuit.fs" />
+    <Compile Include="ShortestPaths.fs" />
+    <Compile Include="Data.fs" />
+    <Compile Include="FunctionEncoding.fs" />
+    <Compile Include="Synthesis.fs" />
+    <Compile Include="Program.fs" />
+    <None Include="App.config" />
+    <Content Include="packages.config" />
+    <None Include="icon.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="FSharp.Core">
+      <HintPath>packages\FSharp.Core.4.7.0\lib\net45\FSharp.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="FSharp.Data">
+      <HintPath>packages\FSharp.Data.2.1.0\lib\net40\FSharp.Data.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="FSharpx.Core">
+      <HintPath>lib\FSharpx.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Z3">
+      <HintPath>packages\Microsoft.Z3.x64.4.8.10\lib\netstandard1.4\Microsoft.Z3.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="mscorlib">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Core">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Numerics">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Z3Fs">
+      <HintPath>lib\Z3Fs.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <Import Project="packages\Microsoft.Z3.x64.4.8.10\build\Microsoft.Z3.x64.targets" Condition="Exists('packages\Microsoft.Z3.x64.4.8.10\build\Microsoft.Z3.x64.targets')" />
+</Project>
